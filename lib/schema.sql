@@ -16,6 +16,17 @@ CREATE TABLE IF NOT EXISTS tpl_players (
   pl_rating_blitz INTEGER
 );
 
+-- tplr_player_ratings: latest rating per player per time class
+CREATE TABLE IF NOT EXISTS tplr_player_ratings (
+  plr_plrid      SERIAL PRIMARY KEY,
+  plr_username   VARCHAR(64) NOT NULL,
+  plr_time_class VARCHAR(16) NOT NULL,
+  plr_rating     INTEGER     NOT NULL,
+  UNIQUE(plr_username, plr_time_class)
+);
+
+CREATE INDEX IF NOT EXISTS idx_tplr_username ON tplr_player_ratings(plr_username);
+
 -- tgr_gamesraw: raw chess.com API response per game
 CREATE TABLE IF NOT EXISTS tgr_gamesraw (
   gr_grid            SERIAL PRIMARY KEY,

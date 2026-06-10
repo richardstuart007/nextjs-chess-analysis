@@ -4,6 +4,8 @@ import { useState } from 'react'
 import MyBox from 'nextjs-shared/MyBox'
 import { MyButton } from 'nextjs-shared/MyButton'
 import { MyHelpField } from 'nextjs-shared/MyHelpField'
+import { runCronSync } from '@/src/lib/actions/cron'
+import { runCronAnalysis } from '@/src/lib/actions/cronAnalysis'
 
 export default function CronPage() {
   const [syncRunning,   setSyncRunning]   = useState(false)
@@ -11,7 +13,7 @@ export default function CronPage() {
   const [syncError,     setSyncError]     = useState('')
 
   const [analysisRunning, setAnalysisRunning] = useState(false)
-  const [analysisResult,  setAnalysisResult]  = useState<{ players: { username: string; gamesProcessed: number; positions: number; moves: number; errors: number }[]; insightsProcessed: number; insightsErrors: number } | null>(null)
+  const [analysisResult,  setAnalysisResult]  = useState<{ players: { username: string; gamesProcessed: number; positions: number; treeBuilt: number; remaining: number; errors: number }[]; insightsProcessed: number; insightsErrors: number } | null>(null)
   const [analysisError,   setAnalysisError]   = useState('')
 
   async function handleGameSync() {
@@ -19,9 +21,7 @@ export default function CronPage() {
     setSyncResult(null)
     setSyncError('')
     try {
-      const res  = await fetch('/api/cron/sync')
-      const data = await res.json()
-      if (!data.players) throw new Error(data.error ?? 'Cron sync failed')
+      const data = await runCronSync()
       setSyncResult(data)
     } catch (err) {
       setSyncError(err instanceof Error ? err.message : 'Cron sync failed')
@@ -35,10 +35,8 @@ export default function CronPage() {
     setAnalysisResult(null)
     setAnalysisError('')
     try {
-      const res  = await fetch('/api/analysis/cron')
-      const data = await res.json()
-      if (!data.ok) throw new Error(data.error ?? 'Analysis pipeline failed')
-      setAnalysisResult(data.summary)
+      const data = await runCronAnalysis()
+      setAnalysisResult(data)
     } catch (err) {
       setAnalysisError(err instanceof Error ? err.message : 'Analysis pipeline failed')
     } finally {
@@ -84,7 +82,7 @@ export default function CronPage() {
           <div className='mt-2 text-xs text-gray-700 space-y-1'>
             {analysisResult.players.map(p => (
               <div key={p.username}>
-                {p.username}: {p.gamesProcessed} games, {p.positions} positions, {p.moves} moves
+                {p.username}: {p.gamesProcessed} games, {p.positions} positions, {p.treeBuilt} built
                 {p.errors > 0 && <span className='text-red-500 ml-1'>({p.errors} errors)</span>}
               </div>
             ))}

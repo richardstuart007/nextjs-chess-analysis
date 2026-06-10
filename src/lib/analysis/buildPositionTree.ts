@@ -268,7 +268,7 @@ export async function buildPositionTree(opts: {
   }))
 
   const fromTs  = opts.dateFrom ? Math.floor(new Date(opts.dateFrom).getTime() / 1000)                   : 0
-  const toTs    = opts.dateTo   ? Math.floor(new Date(opts.dateTo + 'T23:59:59').getTime() / 1000)       : 9999999999
+  const toTs    = opts.dateTo   ? Math.floor(new Date(opts.dateTo + 'T23:59:59').getTime() / 1000)       : Math.floor(Date.now() / 1000)
   const snapRes = await db.query({
     caller: 'buildPositionTree_snap',
     query:  `SELECT

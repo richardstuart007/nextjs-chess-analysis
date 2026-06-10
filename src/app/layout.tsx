@@ -42,10 +42,9 @@ export default function RootLayout({
             <nav className='flex items-center gap-6 text-sm'>
               <a href='/' className='text-gray-600 hover:text-gray-900'>Dashboard</a>
               <a href='/analysis/habits' className='text-gray-600 hover:text-gray-900'>Analysis</a>
-              <a href='/pipeline' className='text-gray-600 hover:text-gray-900'>Pipeline</a>
-              <a href='/cron' className='text-gray-600 hover:text-gray-900'>Cron</a>
-              <a href='/maintenance' className='text-gray-600 hover:text-gray-900'>Maintenance</a>
-              <a href='/admin/maint/db-tools' className='text-gray-600 hover:text-gray-900'>Admin</a>
+              {IS_DEV && (
+                <a href='/owner' className='text-gray-600 hover:text-gray-900'>Owner</a>
+              )}
             </nav>
           </div>
         </header>
