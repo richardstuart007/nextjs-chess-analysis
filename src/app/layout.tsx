@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Chess Analysis',
-  description: 'Chess position analysis and habits'
+  title: 'Chess Game Analyzer',
+  description: 'Analyze your chess.com games with Stockfish'
 }
 
 export default function RootLayout({
@@ -38,12 +38,13 @@ export default function RootLayout({
         )}
         <header className='border-b border-gray-200 bg-white'>
           <div className='flex items-center px-4 py-3 gap-8'>
-            <h1 className='text-lg font-bold text-gray-900 shrink-0'>Chess Analysis</h1>
+            <h1 className='text-lg font-bold text-gray-900 shrink-0'>Chess Analyzer</h1>
             <nav className='flex items-center gap-6 text-sm'>
-              <a href='/pipeline'         className='text-gray-600 hover:text-gray-900'>Pipeline</a>
-              <a href='/analysis/habits'  className='text-gray-600 hover:text-gray-900'>Habits</a>
-              <a href='/analysis/quiz'    className='text-gray-600 hover:text-gray-900'>Quiz</a>
-              <a href='/analysis/briefing' className='text-gray-600 hover:text-gray-900'>Briefing</a>
+              <a href='/' className='text-gray-600 hover:text-gray-900'>Dashboard</a>
+              <a href='/analysis/habits' className='text-gray-600 hover:text-gray-900'>Analysis</a>
+              <a href='/pipeline' className='text-gray-600 hover:text-gray-900'>Pipeline</a>
+              <a href='/cron' className='text-gray-600 hover:text-gray-900'>Cron</a>
+              <a href='/maintenance' className='text-gray-600 hover:text-gray-900'>Maintenance</a>
               <a href='/admin/maint/db-tools' className='text-gray-600 hover:text-gray-900'>Admin</a>
             </nav>
           </div>

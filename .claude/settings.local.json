@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(taskkill /PID 37240 /F)",
+      "Bash(taskkill /PID 38164 /F)",
+      "Bash(taskkill /PID 41892 /F)",
+      "Bash(npx next:*)",
+      "Bash(npm install:*)",
+      "Bash(python3 -c \"import json,sys; p=json.load\\(sys.stdin\\); [print\\(k\\) for k in p.get\\('exports',{}\\).keys\\(\\)]\")",
+      "Bash(ls C:/github/nextjs-chess/*.env*)",
+      "Bash(ls C:/github/nextjs-chess/.env*)",
+      "Bash(openssl rand:*)",
+      "Bash(node -e \"console.log\\(require\\('crypto'\\).randomBytes\\(32\\).toString\\('base64'\\)\\)\")",
+      "Bash(npx tsc:*)",
+      "Bash(next build:*)"
+    ]
+  }
+}
