@@ -113,7 +113,7 @@ Respond ONLY with: { "theme": "...", "advice": "..." }`
   })
 
   if (!response.ok) {
-    await write_Logging({ lg_msg: `generateInsights: Ollama error ${response.status}`, lg_severity: 'E', lg_functionname: 'generateInsights' })
+    await write_Logging({ lg_msg: `generateInsights: Ollama error ${response.status}`, lg_severity: 'E', lg_functionname: 'generateInsights', lg_caller: 'generateInsights' })
     return null
   }
 
@@ -122,7 +122,7 @@ Respond ONLY with: { "theme": "...", "advice": "..." }`
   try {
     const match = text.match(/\{[\s\S]*\}/)
     if (!match) {
-      await write_Logging({ lg_msg: 'generateInsights: no JSON in Ollama response: ' + text, lg_severity: 'E', lg_functionname: 'generateInsights' })
+      await write_Logging({ lg_msg: 'generateInsights: no JSON in Ollama response: ' + text, lg_severity: 'E', lg_functionname: 'generateInsights', lg_caller: 'generateInsights' })
       return null
     }
     const parsed = JSON.parse(match[0])
@@ -130,7 +130,7 @@ Respond ONLY with: { "theme": "...", "advice": "..." }`
       return { theme: parsed.theme, advice: parsed.advice }
     }
   } catch {
-    await write_Logging({ lg_msg: 'generateInsights: failed to parse Ollama response: ' + text, lg_severity: 'E', lg_functionname: 'generateInsights' })
+    await write_Logging({ lg_msg: 'generateInsights: failed to parse Ollama response: ' + text, lg_severity: 'E', lg_functionname: 'generateInsights', lg_caller: 'generateInsights' })
   }
   return null
 }
@@ -172,7 +172,7 @@ export async function generateInsights(opts: { limit?: number; dateFrom?: string
         priority
       })
     } catch (err) {
-      await write_Logging({ lg_msg: 'generateInsights: error for FEN ' + pos.pos_fen + ': ' + (err as Error).message, lg_severity: 'E', lg_functionname: 'generateInsights' })
+      await write_Logging({ lg_msg: 'generateInsights: error for FEN ' + pos.pos_fen + ': ' + (err as Error).message, lg_severity: 'E', lg_functionname: 'generateInsights', lg_caller: 'generateInsights' })
       errors++
     }
   }

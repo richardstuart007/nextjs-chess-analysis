@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-chess",
+  "name": "next-chess-analysis",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,14 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "migrate": "npx tsx lib/migrate.ts",
     "sync-games": "npx tsx lib/sync-games.ts",
     "deconstruct-games": "npx tsx lib/deconstruct-games.ts",
-    "backfill-opening-moves": "npx tsx lib/backfill-opening-moves.ts",
     "cron-sync": "npx tsx lib/cron-sync.ts",
-    "locallocal": "set PORT=3020 && copy /Y .env.locallocal .env && next dev --turbopack",
-    "localdev": "set PORT=3021 && copy /Y .env.localdev .env && next dev --turbopack",
-    "localprod": "set PORT=3022 && copy /Y .env.localprod .env && next dev --turbopack"
+    "locallocal": "set PORT=3025 && copy /Y .env.locallocal .env && next dev --turbopack",
+    "localdev": "set PORT=3026 && copy /Y .env.localdev .env && next dev --turbopack",
+    "localprod": "set PORT=3027 && copy /Y .env.localprod .env && next dev --turbopack"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",

@@ -4,7 +4,7 @@ import * as path from 'path'
 dotenv.config({ path: path.join(process.cwd(), '.env') })
 
 const secret = process.env.CRON_SECRET
-const port = process.env.PORT ?? '3022'
+const port = process.env.PORT ?? '3027'
 
 if (!secret) {
   console.error('CRON_SECRET not set in .env')

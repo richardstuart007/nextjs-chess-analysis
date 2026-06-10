@@ -500,7 +500,6 @@ export default function ChessBoardView({ game, gameRef, username, stockfishDepth
 
     try {
       await saveAnalysisLine({
-        game_id: gameId,
         title: `Variation at move ${path.length}`,
         line_pgn: pgn,
         line_moves: path.map(n => ({ san: n.san, from: n.from, to: n.to, fen: n.fen })),
@@ -540,7 +539,6 @@ export default function ChessBoardView({ game, gameRef, username, stockfishDepth
 
     try {
       await saveAnalysisTree({
-        game_id: gameId,
         title: `Full analysis — ${new Date().toLocaleDateString()}`,
         tree_data: treeData
       })

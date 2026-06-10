@@ -215,7 +215,6 @@ export async function getMovesForPosition(posFen: string, player?: string): Prom
 
 //----------------------------------------------------------------------------------
 //  saveEvaluation — upsert a Stockfish evaluation for a position or move
-//  Passes current timestamp for eva_updated so EXCLUDED.eva_updated ≈ NOW().
 //----------------------------------------------------------------------------------
 export async function saveEvaluation(data: {
   posFen: string

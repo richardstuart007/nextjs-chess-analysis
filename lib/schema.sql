@@ -24,9 +24,7 @@ CREATE TABLE IF NOT EXISTS tgr_gamesraw (
   gr_raw_data        JSONB NOT NULL,
   gr_pgn             TEXT,
   gr_end_time        INTEGER NOT NULL,
-  gr_time_class      VARCHAR(16),
-  gr_synced_at       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  gr_created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  gr_time_class      VARCHAR(16)
 );
 
 CREATE INDEX IF NOT EXISTS idx_tgr_player  ON tgr_gamesraw(gr_player_username);
@@ -76,8 +74,7 @@ CREATE TABLE tgd_gamesdecon (
   gd_eco_code          VARCHAR(8),
   gd_opening_name      TEXT,
   gd_game_url          TEXT,
-  gd_opening_moves     TEXT,
-  gd_created_at        TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  gd_opening_moves     TEXT
 );
 
 CREATE UNIQUE INDEX idx_tgd_grid ON tgd_gamesdecon(gd_grid);
@@ -125,7 +122,6 @@ CREATE TABLE IF NOT EXISTS ten_enrichment (
   en_mistakes          INTEGER,
   en_accuracy          NUMERIC(5,1),
   en_enriched          BOOLEAN DEFAULT FALSE,
-  en_created_at        TIMESTAMPTZ DEFAULT NOW(),
   UNIQUE(en_grid, en_player)
 );
 
@@ -139,9 +135,7 @@ CREATE TABLE IF NOT EXISTS tpos_positions (
   pos_fen       TEXT NOT NULL UNIQUE,
   pos_reached   INTEGER DEFAULT 0,
   pos_color     CHAR(1),
-  pos_depth_avg NUMERIC(5,1),
-  pos_created   TIMESTAMPTZ DEFAULT NOW(),
-  pos_updated   TIMESTAMPTZ DEFAULT NOW()
+  pos_depth_avg NUMERIC(5,1)
 );
 
 CREATE INDEX IF NOT EXISTS idx_tpos_reached ON tpos_positions(pos_reached DESC);
@@ -155,7 +149,6 @@ CREATE TABLE IF NOT EXISTS teva_evaluations (
   eva_mate      INTEGER,
   eva_best_move TEXT,
   eva_depth     INTEGER DEFAULT 20,
-  eva_updated   TIMESTAMPTZ DEFAULT NOW(),
   UNIQUE(eva_pos_fen, eva_move_san)
 );
 
@@ -167,8 +160,7 @@ CREATE TABLE IF NOT EXISTS tins_insights (
   ins_pos_fen   TEXT NOT NULL UNIQUE,
   ins_theme     TEXT,
   ins_advice    TEXT,
-  ins_priority  NUMERIC(8,2),
-  ins_updated   TIMESTAMPTZ DEFAULT NOW()
+  ins_priority  NUMERIC(8,2)
 );
 
 CREATE INDEX IF NOT EXISTS idx_tins_priority ON tins_insights(ins_priority DESC);
@@ -186,8 +178,7 @@ CREATE TABLE IF NOT EXISTS tgam_game_positions (
   gam_cp_loss       INTEGER,
   gam_result        VARCHAR(5),
   gam_is_habit      BOOLEAN,
-  gam_is_improved   BOOLEAN,
-  gam_created       TIMESTAMPTZ DEFAULT NOW()
+  gam_is_improved   BOOLEAN
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS uq_tgam_game_pos ON tgam_game_positions(gam_game_ref, gam_player, gam_pos_fen);
@@ -205,8 +196,7 @@ CREATE TABLE IF NOT EXISTS tbre_briefings (
   bre_games_ct   INTEGER DEFAULT 0,
   bre_mistakes   INTEGER DEFAULT 0,
   bre_improved   INTEGER DEFAULT 0,
-  bre_narrative  TEXT,
-  bre_created    TIMESTAMPTZ DEFAULT NOW()
+  bre_narrative  TEXT
 );
 
 CREATE INDEX IF NOT EXISTS idx_tbre_player ON tbre_briefings(bre_player);
@@ -234,8 +224,7 @@ CREATE TABLE IF NOT EXISTS tqui_quiz (
   qui_pos_fen     TEXT NOT NULL,
   qui_move_played TEXT,
   qui_correct     BOOLEAN,
-  qui_cp_loss     INTEGER,
-  qui_timestamp   TIMESTAMPTZ DEFAULT NOW()
+  qui_cp_loss     INTEGER
 );
 
 CREATE INDEX IF NOT EXISTS idx_tqui_session ON tqui_quiz(qui_session);

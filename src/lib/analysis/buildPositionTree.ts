@@ -170,7 +170,7 @@ async function recomputePosReached(fens: string[]): Promise<void> {
         )
         WHERE p.pos_fen = ANY($1)
       `,
-      params: [chunk]
+      params: [chunk as unknown as string]
     })
   }
 }
