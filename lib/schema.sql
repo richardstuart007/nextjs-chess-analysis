@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS tpl_players (
 
 -- tplr_player_ratings: latest rating per player per time class
 CREATE TABLE IF NOT EXISTS tplr_player_ratings (
-  plr_plrid      SERIAL PRIMARY KEY,
+  plr_plrid      INTEGER PRIMARY KEY,
   plr_username   VARCHAR(64) NOT NULL,
   plr_time_class VARCHAR(16) NOT NULL,
   plr_rating     INTEGER     NOT NULL,
@@ -42,32 +42,11 @@ CREATE INDEX IF NOT EXISTS idx_tgr_player  ON tgr_gamesraw(gr_player_username);
 CREATE INDEX IF NOT EXISTS idx_tgr_end_time ON tgr_gamesraw(gr_end_time DESC);
 CREATE INDEX IF NOT EXISTS idx_tgr_has_pgn  ON tgr_gamesraw(gr_grid) WHERE gr_pgn IS NOT NULL;
 
--- tsa_savedanalyses: user-saved analysis branches
-CREATE TABLE IF NOT EXISTS tsa_savedanalyses (
-  sa_said          SERIAL PRIMARY KEY,
-  sa_grid          INTEGER REFERENCES tgr_gamesraw(gr_grid) ON DELETE CASCADE,
-  sa_save_type     VARCHAR(16) NOT NULL,
-  sa_title         VARCHAR(256),
-  sa_notes         TEXT,
-  sa_line_pgn      TEXT,
-  sa_line_moves    JSONB,
-  sa_starting_fen  TEXT,
-  sa_starting_ply  INTEGER,
-  sa_tree_data     JSONB,
-  sa_eco_code      VARCHAR(8),
-  sa_opening_name  TEXT,
-  sa_created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  sa_updated_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
-
-CREATE INDEX IF NOT EXISTS idx_tsa_game ON tsa_savedanalyses(sa_grid);
-
 
 -- tgd_gamesdecon: deconstructed game data extracted from raw
-DROP TABLE IF EXISTS tgd_gamesdecon CASCADE;
-CREATE TABLE tgd_gamesdecon (
+CREATE TABLE IF NOT EXISTS tgd_gamesdecon (
   gd_gdid              SERIAL PRIMARY KEY,
-  gd_grid              INTEGER NOT NULL REFERENCES tgr_gamesraw(gr_grid) ON DELETE CASCADE,
+  gd_grid              INTEGER NOT NULL,
   gd_white_username    VARCHAR(64) NOT NULL,
   gd_black_username    VARCHAR(64) NOT NULL,
   gd_white_rating      INTEGER NOT NULL,
@@ -97,8 +76,7 @@ CREATE INDEX idx_tgd_result ON tgd_gamesdecon(gd_player_result);
 CREATE INDEX idx_tgd_time_class ON tgd_gamesdecon(gd_time_class);
 
 -- tec_ecoreference: ECO code to opening name lookup
-DROP TABLE IF EXISTS tec_ecoreference CASCADE;
-CREATE TABLE tec_ecoreference (
+CREATE TABLE IF NOT EXISTS tec_ecoreference (
   ec_ecid          SERIAL PRIMARY KEY,
   ec_eco_code      VARCHAR(8) NOT NULL,
   ec_opening_name  TEXT NOT NULL,
@@ -115,7 +93,7 @@ CREATE INDEX idx_tec_code ON tec_ecoreference(ec_eco_code);
 -- ten_enrichment: per-game enrichment data (separate from tgr_gamesraw)
 CREATE TABLE IF NOT EXISTS ten_enrichment (
   en_enid              SERIAL PRIMARY KEY,
-  en_grid              INTEGER NOT NULL REFERENCES tgr_gamesraw(gr_grid) ON DELETE CASCADE,
+  en_grid              INTEGER NOT NULL,
   en_player            VARCHAR(64) NOT NULL,
   en_termination       TEXT,
   en_time_loss_flag    CHAR(10),
@@ -215,7 +193,7 @@ CREATE INDEX IF NOT EXISTS idx_tbre_player ON tbre_briefings(bre_player);
 -- tbrd_briefing_detail: briefing detail rows
 CREATE TABLE IF NOT EXISTS tbrd_briefing_detail (
   brd_id          SERIAL PRIMARY KEY,
-  brd_bre_id      INTEGER REFERENCES tbre_briefings(bre_id),
+  brd_bre_id      INTEGER,
   brd_pos_fen     TEXT NOT NULL,
   brd_move_played TEXT NOT NULL,
   brd_move_num    INTEGER,

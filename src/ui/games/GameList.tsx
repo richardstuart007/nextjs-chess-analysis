@@ -197,6 +197,8 @@ export default function GameList({ players, onSelectGame, onGamesChange, lastAna
               <th className='pb-1 pr-2'>Opponent</th>
               <th className='pb-1 pr-2 text-center'>Opp. Rating</th>
               <th className='pb-1 pr-2 text-center'>Result</th>
+              <th className='pb-1 pr-2 text-center'>W.Rating</th>
+              <th className='pb-1 pr-2 text-center'>B.Rating</th>
               <th className='pb-1 pr-2'>Opening</th>
               <th className='pb-1 pr-2'>ECO</th>
               <th className='pb-1'></th>
@@ -306,6 +308,7 @@ export default function GameList({ players, onSelectGame, onGamesChange, lastAna
                   />
                 </div>
               </td>
+              <td className='py-1 pr-2' />
               <td className='py-1 pr-2'>
                 <MyInput
                   value={filters.opening ?? ''}
@@ -332,12 +335,12 @@ export default function GameList({ players, onSelectGame, onGamesChange, lastAna
           <tbody>
             {loading && (
               <tr>
-                <td colSpan={11} className='py-4 text-center text-xs text-gray-500'>Loading...</td>
+                <td colSpan={12} className='py-4 text-center text-xs text-gray-500'>Loading...</td>
               </tr>
             )}
             {!loading && displayGames.length === 0 && (
               <tr>
-                <td colSpan={11} className='py-4 text-center text-xs text-gray-500'>
+                <td colSpan={12} className='py-4 text-center text-xs text-gray-500'>
                   No games found. Try adjusting your filters or populate games first.
                 </td>
               </tr>
@@ -376,6 +379,8 @@ export default function GameList({ players, onSelectGame, onGamesChange, lastAna
                       {row.gd_player_result}
                     </div>
                   </td>
+                  <td className='py-1.5 pr-2 text-center tabular-nums text-gray-700'>{row.gd_white_rating}</td>
+                  <td className='py-1.5 pr-2 text-center tabular-nums text-gray-700'>{row.gd_black_rating}</td>
                   <td className='py-1.5 pr-2 max-w-40 truncate' title={row.gd_opening_name}>
                     {row.gd_opening_name || 'Unknown'}
                   </td>
